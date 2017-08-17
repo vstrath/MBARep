@@ -14,8 +14,9 @@ ENV HADOOP_PREFIX /usr/local/hadoop
 RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 # Configuring passwordless ssh
+mkdir /var/run/sshd
 USER hduser
-RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && mkdir /var/run/sshd
+RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
 
 #Download hadoop
 USER root
