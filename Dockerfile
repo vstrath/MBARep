@@ -17,10 +17,7 @@ RUN mkdir /var/run/sshd
 
 #Download hadoop
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop
-RUN wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz
-RUN tar -zxvf hadoop-3.0.0-alpha4.tar.gz 
-RUN mv ./hadoop-3.0.0-alpha4/* ./
-RUN rm -rf ./hadoop-3.0.0-alpha4
+RUN wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
 
 ENV HADOOP_PREFIX /usr/local/hadoop
 
