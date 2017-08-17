@@ -11,7 +11,7 @@ RUN apt-get update; \
 ENV HADOOP_PREFIX /usr/local/hadoop
 
 #Create hduser
-RUN addgroup hadoop && adduser --ingroup hadoop hduser
+RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 # Configuring passwordless ssh
 USER hduser
