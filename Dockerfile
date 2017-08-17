@@ -22,7 +22,8 @@ RUN mkdir /var/run/sshd
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
 
 #Update Bashrc
-ADD update_bash $HOME/.bashrc
+ADD update_bash /tmp/update_bash
+RUN cat /tmp/update_bash >> $HOME/.bashrc
 
 #Work Arounds (AKA Gambiarra)
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
