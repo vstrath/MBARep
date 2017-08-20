@@ -21,8 +21,8 @@ USER root
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
 ADD update_bash /tmp/update_bash
 RUN cat /tmp/update_bash >> /home/hduser/.bashrc
-add hadoop-env.sh /tmp/hadoop-env.sh
-RUN mv -f /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop-env.sh
+#add hadoop-env.sh /tmp/hadoop-env.sh
+#RUN mv -f /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop-env.sh
 RUN mkdir -p /app/hadoop/tmp
 RUN chown -R hduser /usr/local/hadoop
 
@@ -32,9 +32,9 @@ RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop n
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
 
 #Starting Hadoop
-#USER hduser
-#RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
-#RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
+USER hduser
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
 
 USER root
 # Hdfs ports
