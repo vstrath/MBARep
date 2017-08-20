@@ -14,6 +14,7 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 RUN mkdir /var/run/sshd
 USER hduser
 RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
+RUN cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
 #Download hadoop
 USER root
