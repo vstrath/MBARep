@@ -29,7 +29,7 @@ RUN chown -R hduser /usr/local/hadoop
 
 #Work Arounds (AKA Gambiarra)
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
-RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile
+RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
 
 #Starting Hadoop
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
