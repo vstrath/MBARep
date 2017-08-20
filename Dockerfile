@@ -16,11 +16,9 @@ USER hduser
 RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
 RUN cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
-#Download hadoop
+#Download/Configure hadoop
 USER root
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
-
-#Configure Hadoop
 ADD update_bash /tmp/update_bash
 RUN cat /tmp/update_bash >> /home/hduser/.bashrc
 add hadoop-env.sh /tmp/hadoop-env.sh
@@ -36,6 +34,7 @@ USER hduser
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
 
+USER root
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
 # Mapred ports
