@@ -24,14 +24,14 @@ RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.b
 ADD update_bash /tmp/update_bash
 RUN cat /tmp/update_bash >> /home/hduser/.bashrc
 #RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop-env.sh
-#RUN export JAVA_HOME=/usr/lib/jvm/default-java
+RUN export JAVA_HOME=/usr/lib/jvm/default-java
 RUN mkdir -p /app/hadoop/tmp
 
 #Work Arounds (AKA Gambiarra)
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
-RUN /usr/local/hadoop/bin/hadoop namenode -format
+RUN export JAVA_HOME=/usr/lib/jvm/default-java && RUN /usr/local/hadoop/bin/hadoop namenode -format
 RUN /usr/local/hadoop/sbin/start-all.sh
 
 # Hdfs ports
