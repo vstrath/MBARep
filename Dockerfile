@@ -32,7 +32,7 @@ RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
-RUN /usr/local/hadoop/sbin/start-all.sh
+RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
 
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
