@@ -8,7 +8,7 @@ RUN apt-get update; \
     apt-get clean
 
 #ENV Variables
-mkdir /usr/local/hadoop
+RUN mkdir /usr/local/hadoop
 ENV HADOOP_PREFIX /usr/local/hadoop
 
 #Create hduser
