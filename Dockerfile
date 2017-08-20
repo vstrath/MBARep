@@ -27,9 +27,10 @@ RUN mkdir -p /app/hadoop/tmp
 RUN chown -R hduser /usr/local/hadoop
 
 #Work Arounds (AKA Gambiarra)
-RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
+#RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
+CMD /usr/sbin/sshd
 CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/sbin/start-all.sh
 
