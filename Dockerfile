@@ -7,7 +7,7 @@ RUN apt-get update; \
     apt-get install -y openssh-server python-software-properties wget default-jre; \
     apt-get clean
 
-#Create hduser
+# Create hduser
 RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 # Configuring passwordless ssh
