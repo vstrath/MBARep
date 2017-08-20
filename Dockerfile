@@ -28,11 +28,13 @@ RUN chown -R hduser /usr/local/hadoop
 
 #Work Arounds (AKA Gambiarra)
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
-
-#Starting Hadoop
-USER hduser
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
+
+#Starting Hadoop
+#USER hduser
+#RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
+#RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
 
 USER root
 # Hdfs ports
