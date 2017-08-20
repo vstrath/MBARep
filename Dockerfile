@@ -31,7 +31,7 @@ RUN mkdir -p /app/hadoop/tmp
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
-RUN export JAVA_HOME=/usr/lib/jvm/default-java && RUN /usr/local/hadoop/bin/hadoop namenode -format
+RUN export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
 RUN /usr/local/hadoop/sbin/start-all.sh
 
 # Hdfs ports
