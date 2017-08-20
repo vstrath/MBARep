@@ -12,9 +12,10 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 
 # Configuring passwordless ssh
 RUN mkdir /var/run/sshd
+RUN echo StrictHostKeyChecking no >> /etc/ssh/ssh_config
 USER hduser
-#RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
-#RUN cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
+RUN cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
 #Download/Configure hadoop
 USER root
@@ -30,8 +31,8 @@ RUN chown -R hduser /usr/local/hadoop
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
-#CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
-#CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/sbin/start-all.sh
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && su hduser -c /usr/local/hadoop/sbin/start-all.sh
 
 USER root
 # Hdfs ports
