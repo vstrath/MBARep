@@ -21,12 +21,12 @@ RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
 
 #Download hadoop
 USER root
-RUN cd $HADOOP_PREFIX && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
+RUN cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
 
 #Configure Hadoop
 ADD update_bash /tmp/update_bash
 RUN cat /tmp/update_bash >> $HOME/.bashrc
-RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> $HADOOP_PREFIX/etc/hadoop-env.sh
+RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> $/usr/local/hadoop/etc/hadoop-env.sh
 RUN mkdir -p /app/hadoop/tmp
 
 #Work Arounds (AKA Gambiarra)
