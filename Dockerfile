@@ -8,6 +8,7 @@ RUN apt-get update; \
     apt-get clean
 
 #ENV Variables
+mkdir /usr/local/hadoop
 ENV HADOOP_PREFIX /usr/local/hadoop
 
 #Create hduser
@@ -20,7 +21,7 @@ RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
 
 #Download hadoop
 USER root
-RUN mkdir $HADOOP_PREFIX && cd $HADOOP_PREFIX && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
+RUN cd $HADOOP_PREFIX && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4
 
 #Configure Hadoop
 ADD update_bash /tmp/update_bash
