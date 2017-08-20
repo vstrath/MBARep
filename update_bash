@@ -2,6 +2,7 @@
 export HADOOP_HOME=/usr/local/hadoop
 
 # Set JAVA_HOME (we will also configure JAVA_HOME directly for Hadoop later on)
+#export JAVA_HOME=/usr/lib/jvm/default-java
 export JAVA_HOME=/usr/lib/jvm/default-java
 
 # Some convenient aliases and functions for running Hadoop-related commands
