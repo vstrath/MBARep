@@ -27,7 +27,7 @@ RUN mkdir -p /app/hadoop/tmp
 RUN chown -R hduser /usr/local/hadoop
 
 #Work Arounds (AKA Gambiarra)
-#RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
+#R#UN echo /usr/sbin/sshd >> /etc/bash.bashrc
 
 #Starting Hadoop
 CMD /usr/sbin/sshd
