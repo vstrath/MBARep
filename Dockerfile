@@ -4,7 +4,7 @@ MAINTAINER Vitor/Sergio
 # Install needed tools
 USER root
 RUN apt-get update; \
-    apt-get install -y openssh-server python-software-properties wget default-jre; \
+    apt-get install -y openssh-server python-software-properties wget default-jre vim nmap net-tools; \
     apt-get clean
 
 # Create hduser
@@ -22,13 +22,17 @@ RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.b
 
 #Configure Hadoop
 ADD update_bash /tmp/update_bash
-RUN cat /tmp/update_bash >> $HOME/.bashrc
+RUN cat /tmp/update_bash >> /home/hduser/.bashrc
 #RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop-env.sh
-RUN export JAVA_HOME=/usr/lib/jvm/default-java
+#RUN export JAVA_HOME=/usr/lib/jvm/default-java
 RUN mkdir -p /app/hadoop/tmp
 
 #Work Arounds (AKA Gambiarra)
 RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
+
+#Starting Hadoop
+RUN /usr/local/hadoop/bin/hadoop namenode -format
+RUN /usr/local/hadoop/sbin/start-all.sh
 
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
