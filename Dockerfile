@@ -22,7 +22,7 @@ RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.b
 #Configure Hadoop
 ADD update_bash /tmp/update_bash
 RUN cat /tmp/update_bash >> $HOME/.bashrc
-RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> $/usr/local/hadoop/etc/hadoop-env.sh
+RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop-env.sh
 RUN mkdir -p /app/hadoop/tmp
 
 #Work Arounds (AKA Gambiarra)
