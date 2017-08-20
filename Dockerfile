@@ -32,9 +32,8 @@ RUN export JAVA_HOME=/usr/lib/jvm/default-java && su - hduser && /usr/local/hado
 RUN export JAVA_HOME=/usr/lib/jvm/default-java && su - hduser && /usr/local/hadoop/sbin/start-all.sh
 
 #Starting Hadoop
-USER hduser
-CMD export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/bin/hadoop namenode -format
-CMD export JAVA_HOME=/usr/lib/jvm/default-java && /usr/local/hadoop/sbin/start-all.sh
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && su test /usr/local/hadoop/bin/hadoop namenode -format
+CMD export JAVA_HOME=/usr/lib/jvm/default-java && su test /usr/local/hadoop/sbin/start-all.sh
 
 USER root
 # Hdfs ports
