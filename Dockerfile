@@ -34,7 +34,8 @@ RUN echo /usr/sbin/sshd >> /etc/bash.bashrc
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
 
 #Starting Hadoop
-CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format && /usr/local/hadoop/sbin/start-all.sh
+CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
+CMD su hduser -c /usr/local/hadoop/sbin/start-all.sh
 
 USER root
 # Hdfs ports
