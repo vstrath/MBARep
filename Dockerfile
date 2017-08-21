@@ -37,7 +37,7 @@ RUN chown -R hduser /etc/ssh
 #Starting Hadoop
 CMD ssh localhost
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
-CMD su hduser -c /usr/local/hadoop/sbin/start-all.sh
+CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
 USER root
 # Hdfs ports
