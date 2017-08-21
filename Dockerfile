@@ -32,6 +32,7 @@ RUN chown -R hduser /usr/local/hadoop
 #Work Arounds (AKA Gambiarra)
 RUN echo /etc/init.d/ssh restart >> /etc/bash.bashrc
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
+RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
 CMD /etc/init.d/ssh restart
