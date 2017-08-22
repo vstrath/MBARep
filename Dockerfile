@@ -11,10 +11,9 @@ RUN apt-get update; \
 RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 # Configuring passwordless ssh
-#RUN mkdir /var/run/sshd && echo StrictHostKeyChecking no >> /etc/ssh/ssh_config
-RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/ssh_config
-RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/ssh_config
+#RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 
 
 USER hduser
