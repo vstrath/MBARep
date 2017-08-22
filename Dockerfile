@@ -23,7 +23,7 @@ RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.b
 #Configuring JAVA_HOME
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
-#Work Arounds (AKA Gambiarra)
+#Other configs (AKA work arounds)
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 #RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
 RUN chown -R hduser /etc/ssh
