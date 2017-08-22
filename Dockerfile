@@ -8,7 +8,6 @@ RUN apt-get update; \
     apt-get clean
 
 #Download/Configuring hadoop
-USER root
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4.tar.gz
 
 # Create hduser to run hadoop
@@ -26,12 +25,12 @@ RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id
 
 
 #Other configs (AKA work arounds)
+USER root
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 #RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
 RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
-CMD ssh localhost
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
