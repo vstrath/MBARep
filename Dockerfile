@@ -21,7 +21,6 @@ RUN apt-get install gpw
 RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-RUN hostnamectl set-hostname meuhost
 USER hduser
 RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 RUN touch ~/.ssh/config && echo Host * >> ~/.ssh/config && echo StrictHostKeyChecking no >> ~/.ssh/config 
@@ -34,6 +33,7 @@ RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
+RUN echo 123321 > /etc/hostname
 USER hduser
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
