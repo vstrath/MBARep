@@ -22,10 +22,10 @@ RUN chown -R hduser /usr/local/hadoop
 RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config 
-RUN echo StrictHostKeyChecking no > /home/hduser/.ssh/config
-RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
 RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
 RUN su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN echo StrictHostKeyChecking no >> /home/hduser/.ssh/config
+RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
 
 #Other configs (AKA work arounds)
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
