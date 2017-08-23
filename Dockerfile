@@ -10,7 +10,8 @@ RUN apt-get update; \
 RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.br/pub/apache/hadoop/core/current/hadoop-3.0.0-alpha4.tar.gz && tar -zxvf hadoop-3.0.0-alpha4.tar.gz && mv ./hadoop-3.0.0-alpha4/* ./ && rm -rf ./hadoop-3.0.0-alpha4.tar.gz
 
 # Create hduser to run hadoop
-RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
+RUN addgroup hadoop 
+RUN adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 #Configuring JAVA_HOME
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc
@@ -23,10 +24,10 @@ RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config 
 RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
-RUN su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-RUN touch /home/hduser/.ssh/config
-RUN echo StrictHostKeyChecking no >> /home/hduser/.ssh/config
-RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
+RUN su hduser -c cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
+#RUN touch /home/hduser/.ssh/config
+#RUN echo StrictHostKeyChecking no >> /home/hduser/.ssh/config
+#RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
 
 #Other configs (AKA work arounds)
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
