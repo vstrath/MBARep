@@ -2,7 +2,6 @@ FROM ubuntu:latest
 MAINTAINER Vitor/Sergio
 
 # Install needed tools
-USER root
 RUN apt-get update; \
     apt-get install -y openssh-server python-software-properties wget default-jre vim nmap net-tools; \
     apt-get clean
@@ -17,34 +16,21 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
 # Configuring passwordless ssh
-RUN apt-get install gpw
-RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-USER hduser
-RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-RUN echo StrictHostKeyChecking no >> ~/.ssh/config && echo UserKnownHostsFile /dev/null >> ~/.ssh/config
-
+RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && echo StrictHostKeyChecking no >> $HOME/.ssh/config && echo UserKnownHostsFile /dev/null >> $HOME/.ssh/config
+#USER hduser
+RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
 #Other configs (AKA work arounds)
-USER root
-#RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
-#RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
+RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 #RUN chown -R hduser /etc/ssh
 
-#Starting Hadoop
-#USER hduser
-#CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
-#CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
-
-# Copy start-hadoop script
-RUN mkdir /var/run/sshd
+# Hadoop start script
 ADD hadoop-start.sh ./hadoop-start.sh
 RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
 
+#Start hadoop
 CMD ["/bin/bash", "/usr/local/hadoop/bin/hadoop-start.sh"]
 
-USER root
 # Hdfs ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000
 # Mapred ports
