@@ -22,8 +22,8 @@ RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 USER hduser
-#RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-#RUN touch ~/.ssh/config && echo Host * >> ~/.ssh/config && echo StrictHostKeyChecking no >> ~/.ssh/config 
+RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN echo StrictHostKeyChecking no >> ~/.ssh/config && echo UserKnownHostsFile /dev/null >> ~/.ssh/config
 
 
 #Other configs (AKA work arounds)
@@ -34,7 +34,6 @@ RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
 USER hduser
-CMD echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
