@@ -22,6 +22,7 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/s
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 USER hduser
 RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN touch ~/.ssh/config && echo Host * >> ~/.ssh/config && echo StrictHostKeyChecking no >> ~/.ssh/config 
 
 
 #Other configs (AKA work arounds)
