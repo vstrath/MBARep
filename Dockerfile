@@ -21,9 +21,9 @@ RUN apt-get install gpw
 RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-RUN chown hduser /etc/hostname
+RUN hostnamectl set-hostname meuhost
 USER hduser
-RUN gpw 1 10 >> /etc/hostname && echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 RUN touch ~/.ssh/config && echo Host * >> ~/.ssh/config && echo StrictHostKeyChecking no >> ~/.ssh/config 
 
 
