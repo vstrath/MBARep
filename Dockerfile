@@ -28,9 +28,9 @@ RUN echo StrictHostKeyChecking no >> ~/.ssh/config && echo UserKnownHostsFile /d
 
 #Other configs (AKA work arounds)
 USER root
-RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
+#RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 #RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /etc/profile && export PATH=$JAVA_HOME/bin:$PATH
-RUN chown -R hduser /etc/ssh
+#RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
 #USER hduser
