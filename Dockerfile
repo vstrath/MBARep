@@ -17,12 +17,12 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
 # Configuring passwordless ssh
-RUN apt-get install gpw && gpw 1 10 >> /etc/hostname
+RUN apt-get install gpw
 RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 USER hduser
-RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN gpw 1 10 >> /etc/hostname && echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 RUN touch ~/.ssh/config && echo Host * >> ~/.ssh/config && echo StrictHostKeyChecking no >> ~/.ssh/config 
 
 
