@@ -13,12 +13,18 @@ RUN mkdir /usr/local/hadoop && cd /usr/local/hadoop && wget http://ftp.unicamp.b
 RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" hduser
 
 #Configuring JAVA_HOME
-RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
+RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc
+RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+RUN mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
 # Configuring passwordless ssh
-RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && echo StrictHostKeyChecking no >> /home/hduser/.ssh/config && echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
-#USER hduser
-RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && 
+RUN echo StrictHostKeyChecking no > /home/hduser/.ssh/config
+RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
+RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P ""
+RUN su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
 #Other configs (AKA work arounds)
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
