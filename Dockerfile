@@ -38,6 +38,7 @@ USER root
 #CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
 # Copy start-hadoop script
+RUN mkdir /var/run/sshd
 ADD hadoop-start.sh ./hadoop-start.sh
 RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
 
