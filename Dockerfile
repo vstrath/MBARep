@@ -33,7 +33,7 @@ USER root
 
 #Other configs (AKA work arounds)
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
-#RUN chown -R hduser /etc/ssh
+RUN chown -R hduser /etc/ssh
 
 # Hadoop start script
 ADD hadoop-start.sh ./hadoop-start.sh
