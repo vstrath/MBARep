@@ -43,7 +43,7 @@ USER root
 RUN /usr/local/hadoop/bin/hadoop namenode -format
 USER hduser
 RUN /usr/local/hadoop/sbin/./start-dfs.sh
-
+USER root
 #Start hadoop
 #CMD ["/bin/bash", "/usr/local/hadoop/bin/hadoop-start.sh"]
 
