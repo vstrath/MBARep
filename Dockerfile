@@ -16,7 +16,7 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
 # Configuring passwordless ssh
-RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && echo StrictHostKeyChecking no >> $HOME/.ssh/config && echo UserKnownHostsFile /dev/null >> $HOME/.ssh/config
+RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && echo StrictHostKeyChecking no >> /home/hduser/.ssh/config && echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
 #USER hduser
 RUN su hduser -c echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && su hduser -c cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
