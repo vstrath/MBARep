@@ -17,7 +17,7 @@ RUN addgroup hadoop && adduser --ingroup hadoop --disabled-password --gecos "" h
 RUN echo export JAVA_HOME=/usr/lib/jvm/default-java >> /home/hduser/.bashrc && echo export JAVA_HOME=/usr/lib/jvm/default-java >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh && mkdir -p /app/hadoop/tmp && chown -R hduser /usr/local/hadoop
 
 # Configuring passwordless ssh
-#RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
+RUN sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 USER hduser
