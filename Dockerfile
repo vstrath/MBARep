@@ -40,9 +40,9 @@ RUN chown -R hduser /etc/ssh
 #RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
 
 USER root
-/usr/local/hadoop/bin/hadoop namenode -format
+RUN /usr/local/hadoop/bin/hadoop namenode -format
 USER hduser
-/usr/local/hadoop/sbin/./start-dfs.sh
+RUN /usr/local/hadoop/sbin/./start-dfs.sh
 
 #Start hadoop
 #CMD ["/bin/bash", "/usr/local/hadoop/bin/hadoop-start.sh"]
