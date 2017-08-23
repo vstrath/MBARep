@@ -33,10 +33,15 @@ RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 RUN chown -R hduser /etc/ssh
 
 #Starting Hadoop
-USER hduser
-CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
+#USER hduser
+#CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 #CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
-CMD ["/bin/bash", "su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh"]
+
+# Copy start-hadoop script
+ADD hadoop-start.sh ./hadoop-start.sh
+RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
+
+CMD ["/bin/bash", "/usr/local/hadoop/bin/hadoop-start.sh"]
 
 USER root
 # Hdfs ports
