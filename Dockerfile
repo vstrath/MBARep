@@ -11,10 +11,16 @@ ADD hdfs-site.xml /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 
 #SSH
-RUN mkdir /var/run/sshd && echo root:root | chpasswd && sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+#RUN mkdir /var/run/sshd && echo root:root | chpasswd && sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/sshd_config && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+#RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys && touch /home/hduser/.ssh/config && echo StrictHostKeyChecking no >> /home/hduser/.ssh/config && echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
+#USER root
 USER hduser
-RUN echo /home/hduser/.ssh/id_rsa | ssh-keygen -t rsa -P "" && cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys && touch /home/hduser/.ssh/config && echo StrictHostKeyChecking no >> /home/hduser/.ssh/config && echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa
+RUN cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 USER root
+RUN mkdir /var/run/sshd
 EXPOSE 22
 
 # Exposings hadoop ports
