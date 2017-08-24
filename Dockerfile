@@ -38,13 +38,12 @@ RUN chown -R hduser /etc/ssh
 ADD core-site.xml /usr/local/hadoop/etc/hadoop/core-site.xml
 ADD hdfs-site.xml /usr/local/hadoop/etc/hadoop/hdfs-site.xml 
 ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
-
+RUN mkdir /var/run/sshd
 
 # Hadoop start script
 #ADD hadoop-start.sh ./hadoop-start.sh
 #RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
 
-CMD ssh -o StrictHostKeyChecking=no -l hduser localhost 
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
