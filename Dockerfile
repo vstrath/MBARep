@@ -44,9 +44,9 @@ ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 #ADD hadoop-start.sh ./hadoop-start.sh
 #RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
 
-
-CMD /usr/local/hadoop/bin/hadoop namenode -format
-CMD /usr/local/hadoop/sbin/./start-dfs.sh
+CMD ssh -o StrictHostKeyChecking=no -l hduser localhost 
+CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
+CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
 #Start hadoop
 #CMD ["/bin/bash", "/usr/local/hadoop/bin/hadoop-start.sh"]
