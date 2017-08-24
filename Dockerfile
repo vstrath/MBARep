@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get upgrade -y apt-get install -y openssh-server python-software-properties wget default-jre vim 
+RUN apt-get update && apt-get install -y openssh-server python-software-properties wget default-jre vim 
 
 #SSH
 RUN mkdir /var/run/sshd && echo root:root | chpasswd
