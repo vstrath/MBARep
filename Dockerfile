@@ -35,6 +35,11 @@ USER root
 RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 RUN chown -R hduser /etc/ssh
 
+ADD core-site.xml /usr/local/hadoop/etc/hadoop/core-site.xml
+ADD hdfs-site.xml /usr/local/hadoop/etc/hadoop/hdfs-site.xml 
+ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
+
+
 # Hadoop start script
 #ADD hadoop-start.sh ./hadoop-start.sh
 #RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
