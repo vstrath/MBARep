@@ -43,7 +43,7 @@ RUN mkdir /var/run/sshd
 # Hadoop start script
 #ADD hadoop-start.sh ./hadoop-start.sh
 #RUN mv ./hadoop-start.sh /usr/local/hadoop/bin/hadoop-start.sh
-CMD /etc/init.d/ssh start
+CMD exec /usr/sbin/sshd -D
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 CMD su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
 
