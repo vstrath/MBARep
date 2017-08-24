@@ -13,9 +13,9 @@ ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 #SSH
 #RUN chown -R hduser /etc/ssh
 #USER hduser
-RUN echo "yes" | ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN echo "yes" | ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa
+RUN su hduser -c echo "yes" | ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN su hduser -c echo "yes" | ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN su hduser -c ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa
 RUN cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 #USER root
 RUN mkdir /var/run/sshd && echo UserKnownHostsFile=/dev/null >> /etc/ssh/ssh_config && echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config
