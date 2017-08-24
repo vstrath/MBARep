@@ -32,7 +32,7 @@ RUN echo UserKnownHostsFile /dev/null >> /home/hduser/.ssh/config
 USER root
 
 #Other configs (AKA work arounds)
-RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
+#RUN echo /etc/init.d/ssh start >> /etc/bash.bashrc
 RUN chown -R hduser /etc/ssh
 
 ADD core-site.xml /usr/local/hadoop/etc/hadoop/core-site.xml
