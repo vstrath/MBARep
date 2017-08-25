@@ -11,20 +11,16 @@ ADD hdfs-site.xml /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml /usr/local/hadoop/etc/hadoop/mapred-site.xml
 
 #SSH
-#RUN chown -R hduser /etc/ssh
-
-RUN echo "yes" | ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN echo "yes" | ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-
+RUN echo "yes" | ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && echo "yes" | ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key && mkdir /var/run/sshd && echo UserKnownHostsFile=/dev/null >> /etc/ssh/ssh_config && echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config
 USER hduser
-RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa
-RUN cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
+RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa && cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 USER root
-RUN mkdir /var/run/sshd && echo UserKnownHostsFile=/dev/null >> /etc/ssh/ssh_config && echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config
-EXPOSE 22
+
 
 # Exposings hadoop ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000 10020 19888 8030 8031 8032 8033 8040 8042 8088 49707 2122 22
+# Exposing ssh port
+EXPOSE 22
 
 CMD ["/usr/sbin/sshd", "-D"]
 CMD su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
