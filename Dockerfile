@@ -16,14 +16,15 @@ USER hduser
 RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa && cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 USER root
 
-
-# Exposings hadoop ports
+# Exposing hadoop ports
 EXPOSE 50010 50020 50070 50075 50090 8020 9000 10020 19888 8030 8031 8032 8033 8040 8042 8088 49707 2122 22
 # Exposing ssh port
 EXPOSE 22
 
+#Starting hadoop/ssh
 ENTRYPOINT /usr/sbin/sshd
-#CMD ["/usr/sbin/sshd", "-D"]
 ENTRYPOINT su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
 ENTRYPOINT su hduser -c /usr/local/hadoop/sbin/./start-all.sh
+
+#CMD ["/usr/sbin/sshd", "-D"]
 
