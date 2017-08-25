@@ -25,5 +25,5 @@ EXPOSE 22
 ENTRYPOINT /usr/sbin/sshd
 #CMD ["/usr/sbin/sshd", "-D"]
 ENTRYPOINT su hduser -c /usr/local/hadoop/bin/hadoop namenode -format
-ENTRYPOINT su hduser -c /usr/local/hadoop/sbin/./start-dfs.sh
-ENTRYPOINT while true; do sleep 1000; done
+ENTRYPOINT su hduser -c /usr/local/hadoop/sbin/./start-all.sh
+
