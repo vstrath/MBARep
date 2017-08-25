@@ -18,7 +18,6 @@ RUN echo "yes" | ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
 
 USER hduser
 RUN ssh-keygen -q -N "" -t rsa -f /home/hduser/.ssh/id_rsa
-RUN mkdir /home/hduser/.ssh
 RUN cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 USER root
 RUN mkdir /var/run/sshd && echo UserKnownHostsFile=/dev/null >> /etc/ssh/ssh_config && echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config
